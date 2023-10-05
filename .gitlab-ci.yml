@@ -1,0 +1,27 @@
+stages:
+- linting
+
+flake8:
+  stage: linting
+  image: python:3.10
+  script:
+    - pip3 install flake8 pep8-naming flake8-absolute-import flake8-quotes
+    - flake8 --verbose
+  only:
+    - main
+    - merge_requests
+    - pushes
+
+black:
+    stage: linting
+    image: registry.gitlab.com/pipeline-components/black:latest
+    script:
+      - black --check --verbose.
+    only:
+      - main
+      - merge_requests
+      - pushes
+
+
+after_script:
+  - echo "status-badge: [![pipeline status](https://gitlab.crja72.ru/django_2023/students/146863-kostyaason-47231/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django_2023/students/146863-kostyaason-47231/-/pipelines)"
