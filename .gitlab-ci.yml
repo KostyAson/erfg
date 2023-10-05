@@ -1,6 +1,11 @@
 stages:
 - linting
 
+default:
+  after_script:
+    script:
+      - echo "status-badge: [![pipeline status](https://gitlab.crja72.ru/django_2023/students/146863-kostyaason-47231/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django_2023/students/146863-kostyaason-47231/-/pipelines)" >> README.md
+
 flake8:
   stage: linting
   image: python:3.10
@@ -13,15 +18,11 @@ flake8:
     - pushes
 
 black:
-    stage: linting
-    image: registry.gitlab.com/pipeline-components/black:latest
-    script:
-      - black --check --verbose.
-    only:
-      - main
-      - merge_requests
-      - pushes
-
-
-after_script:
-  - echo "status-badge: [![pipeline status](https://gitlab.crja72.ru/django_2023/students/146863-kostyaason-47231/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django_2023/students/146863-kostyaason-47231/-/pipelines)" >> README.md
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/black:latest
+  script:
+    - black --check --verbose.
+  only:
+    - main
+    - merge_requests
+    - pushes
